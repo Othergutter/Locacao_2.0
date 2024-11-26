@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
      return 1;
   }
   
-  strcpy(userInfoA->nameUser, "flavio.oliveira");
+  strcpy(userInfoA->nameUser, "flavio.vieira");
   strcpy(userInfoA->passUser, "123321");
   strcpy(userInfoA->userMat, "001");
   userInfoA->acessLevel = 2;
