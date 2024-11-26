@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
      return 1;
   }
   
-  strcpy(userInfoA->nameUser, "FLAVIEIRA");
+  strcpy(userInfoA->nameUser, "flavio.oliveira");
   strcpy(userInfoA->passUser, "123321");
   strcpy(userInfoA->userMat, "001");
   userInfoA->acessLevel = 2;
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
      return 1;
   }
   
-  strcpy(userInfoB->nameUser, "MAURIOSO");
+  strcpy(userInfoB->nameUser, "mauricio.souza");
   strcpy(userInfoB->passUser, "pimba123");
   strcpy(userInfoB->userMat, "002");
   userInfoB->acessLevel = 2;
