@@ -660,9 +660,6 @@ void flushUser(struct userData * userInfo) {
 
     //liberando a memória alocada
     
-    free(userInfo->nameUser);
-    free(userInfo->userMat);
-    free(userInfo->passUser);
     free(userInfo);
 
     printf("Usuario removido com sucesso.\n");
@@ -779,7 +776,7 @@ void registerUser () {
            return;                
         }
      
-        userInputs("\nInsira o nome (aperte apenas enter para cancelar): ", userInfo->nameUser, 150);
+        userInputs("\nInsira o nome (aperte apenas enter para cancelar) tipo nome.sobrenome: ", userInfo->nameUser, 150);
         if(!userInfo->nameUser[0]){
            free(userInfo);
            break;
