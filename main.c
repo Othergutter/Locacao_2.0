@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+//ligma
 //estrutura de dados dos clientes
 struct customerData {
        char name[150];
@@ -23,7 +23,7 @@ struct userData {
        char nameUser[50];
        char passUser[50];
        char userMat[30];
-       int acessLevel; // nível de acessso no aplicativo
+       int acessLevel; // nï¿½vel de acessso no aplicativo
        struct userData *next;
        struct userData *prior;
 }user_length;
@@ -37,21 +37,21 @@ struct userData *userLast;
 //Cria uma lista duplamente encadeada para guardar os dados
 void initializeListCustomer (struct customerData *i, /*novo elemento*/ 
                      struct customerData **start, /*primeiro elemento da lista*/
-                     struct customerData **last /*último elemento da lista*/);
+                     struct customerData **last /*ï¿½ltimo elemento da lista*/);
 
 void initializeListUser (struct userData *i,
                      struct userData **userStart, 
                      struct userData **userLast);
 
-void clearBuffer(); //limpa o buffer de scanf até encontrar um \n, evita repetição desnecessária
+void clearBuffer(); //limpa o buffer de scanf atï¿½ encontrar um \n, evita repetiï¿½ï¿½o desnecessï¿½ria
 
-void forgotPass(); // Função para senhas esquecidas
+void forgotPass(); // Funï¿½ï¿½o para senhas esquecidas
 
 void startMenu(char * userName, char * userPass); // Menu de do Login do usuario
 
 void menuCustomer(char * userName); // Menu para ferramentas voltadas ao cliente
 
-void menuUser(char * useName); // Menu para ferramentas voltadas à gestão de funcionários
+void menuUser(char * useName); // Menu para ferramentas voltadas ï¿½ gestï¿½o de funcionï¿½rios
 
 struct customerData *find(char *name); // usada para comparar e achar nomes em algumas estruturas
 
@@ -59,33 +59,33 @@ void display(struct customerData*customerInfo); // Imprime os campos dos cliente
 
 //void listCustomers(); //lista todos os clientes
 
-void changeData (struct customerData *customerInfo); // Responsável por acessar o estrutura que terá os dados modificados
+void changeData (struct customerData *customerInfo); // Responsï¿½vel por acessar o estrutura que terï¿½ os dados modificados
 
-void editCustomer (); // editará os dados de um cliente
+void editCustomer (); // editarï¿½ os dados de um cliente
 
-void changeStatus(struct customerData *customerInfo); // Responsável por acessar o estrutura que terá o status modificado
+void changeStatus(struct customerData *customerInfo); // Responsï¿½vel por acessar o estrutura que terï¿½ o status modificado
 
-void disableEnableCustomer(); // função responsável por habilitar e desabilitar uma conta do cliente
+void disableEnableCustomer(); // funï¿½ï¿½o responsï¿½vel por habilitar e desabilitar uma conta do cliente
 
-void searchCustomer (); // função que procurará um cliente já cadastrado
+void searchCustomer (); // funï¿½ï¿½o que procurarï¿½ um cliente jï¿½ cadastrado
 
-bool searchUser (char * userName, char *userPass); // função que procurará se o usuário está cadastrado
+bool searchUser (char * userName, char *userPass); // funï¿½ï¿½o que procurarï¿½ se o usuï¿½rio estï¿½ cadastrado
 
-struct userData * findUser (char * userName); // Procura os dados do usuario na lista pelo nome do usuário
+struct userData * findUser (char * userName); // Procura os dados do usuario na lista pelo nome do usuï¿½rio
 
-void userInputs (char *prompt, char *s, int count); // Pega as entradas do usuário
+void userInputs (char *prompt, char *s, int count); // Pega as entradas do usuï¿½rio
 
-void accurateInput (char *prompt, char *s, int count); //Pega precisamente as entrada do usuário
+void accurateInput (char *prompt, char *s, int count); //Pega precisamente as entrada do usuï¿½rio
 
-void stateInput (char *prompt, char *s, int count); // função de entrada para a silga do estado
+void stateInput (char *prompt, char *s, int count); // funï¿½ï¿½o de entrada para a silga do estado
 
-void changeUserData(struct userData * userInfo); // mudará os dados do usuário
+void changeUserData(struct userData * userInfo); // mudarï¿½ os dados do usuï¿½rio
 
-void editUser (); // editará o usuário
+void editUser (); // editarï¿½ o usuï¿½rio
 
-void registerUser (); //função que cadastrará os usuários com menor nível de acesso
+void registerUser (); //funï¿½ï¿½o que cadastrarï¿½ os usuï¿½rios com menor nï¿½vel de acesso
 
-void registerCustomer (); // função que cadastrará o cliente
+void registerCustomer (); // funï¿½ï¿½o que cadastrarï¿½ o cliente
 
 int main(int argc, char *argv[])
 {
@@ -93,12 +93,12 @@ int main(int argc, char *argv[])
   char * userName, * userPass;
   userName = (char *)  malloc(50 * sizeof(char));
   userPass = (char *)  malloc(50 * sizeof(char));
-  char userIn = ' '; // escolha do usuário
-  bool loopState = true; // variável bool para controlar o do while
+  char userIn = ' '; // escolha do usuï¿½rio
+  bool loopState = true; // variï¿½vel bool para controlar o do while
   
   struct userData *userInfoA = NULL;
   
-  //Inicizlização dos funcionários com nível total de acesso à área de gestão do aplicativo
+  //Inicizlizaï¿½ï¿½o dos funcionï¿½rios com nï¿½vel total de acesso ï¿½ ï¿½rea de gestï¿½o do aplicativo
   
   userInfoA = (struct userData *)malloc(sizeof(struct userData));
   if (!userInfoA) {
@@ -134,8 +134,8 @@ int main(int argc, char *argv[])
    
   startMenu(userName, userPass);
   
-  do{ // loop do sistema, rodará no mínimo uma vez
-     printf("\nSistema locacao 2.0, bem-vindo %s\n", userName); // apresentação, ao usuário
+  do{ // loop do sistema, rodarï¿½ no mï¿½nimo uma vez
+     printf("\nSistema locacao 2.0, bem-vindo %s\n", userName); // apresentaï¿½ï¿½o, ao usuï¿½rio
      printf("-Aperte 1 para acessar a aba dos clientes\n");
      printf("-Aperte 2 para acessar a aba de gestao\n");
      printf("-Aperte 3 para sair do aplicativo\n");
@@ -191,7 +191,7 @@ void initializeListUser (struct userData *i, struct userData **userStart, struct
          return;
      }
      
-     p = *userStart; //começa no topo da lista
+     p = *userStart; //comeï¿½a no topo da lista
      
      old = NULL;
      while(p) {
@@ -231,7 +231,7 @@ void initializeListCustomer (struct customerData *i, struct customerData **start
          return;
      }
      
-     p = *start; //começa no topo da lista
+     p = *start; //comeï¿½a no topo da lista
      
      old = NULL;
      while(p) {
@@ -272,7 +272,7 @@ void forgotPass() {
      clearBuffer();
      if (userIn == 's' || userIn == 'S') {
         printf("\nUm email foi enviada para os moderadores do sistema para alterar a senha\n");
-        //poderá ser implementado um sistema real a partir desse ponto :)
+        //poderï¿½ ser implementado um sistema real a partir desse ponto :)
      }
 }
 
@@ -280,7 +280,7 @@ void startMenu(char * userName , char *userPass) {
      bool loopState = true;
      int tries = 3;
      do{ // loop login
-        printf("\nSistema locacao 2.0\n"); // apresentação, ao usuário
+        printf("\nSistema locacao 2.0\n"); // apresentaï¿½ï¿½o, ao usuï¿½rio
         printf("\nFaca o seu Login:\n");
         userInputs("-Nome do usuario: ", userName, 50);
         userInputs("-Senha do usuario: ", userPass, 50);
@@ -300,8 +300,8 @@ void menuCustomer(char * userName){
      bool loopState = true;
      char userIn;
      
-     do{ // loop da aba cliente, rodará no mínimo uma vez
-         printf("\nSistema locacao 2.0, usuario: %s\n", userName); // apresentação, ao usuário
+     do{ // loop da aba cliente, rodarï¿½ no mï¿½nimo uma vez
+         printf("\nSistema locacao 2.0, usuario: %s\n", userName); // apresentaï¿½ï¿½o, ao usuï¿½rio
          printf("-Aperte 1 para cadastrar cliente\n");
          printf("-Aperte 2 para consultar cliente\n");
          printf("-Aperte 3 para editar cliente\n");
@@ -312,10 +312,10 @@ void menuCustomer(char * userName){
   
          switch (userIn) {
                 case '1':
-                    registerCustomer(); // se for 1, o cliente será registrado        
+                    registerCustomer(); // se for 1, o cliente serï¿½ registrado        
                     break;
                  case '2':
-                    searchCustomer(); // se for 2, procurará o cliente
+                    searchCustomer(); // se for 2, procurarï¿½ o cliente
                     break;
                  case '3':
                     editCustomer(); // editar um cliente
@@ -337,8 +337,8 @@ void menuUser(char * userName){
      bool loopState = true;
      char userIn;
      
-     do{ // loop da aba cliente, rodará no mínimo uma vez
-         printf("\nSistema locacao 2.0, usuario: %s\n", userName); // apresentação, ao usuário
+     do{ // loop da aba cliente, rodarï¿½ no mï¿½nimo uma vez
+         printf("\nSistema locacao 2.0, usuario: %s\n", userName); // apresentaï¿½ï¿½o, ao usuï¿½rio
          printf("-Aperte 1 para cadastrar usuario\n");
          printf("-Aperte 2 para sair do menu\n");   
          scanf(" %c", &userIn); // coleta a escolha e a armaezena
@@ -346,7 +346,7 @@ void menuUser(char * userName){
   
          switch (userIn) {
                 case '1':
-                     registerUser(); // se for 1, o usuário será registrado        
+                     registerUser(); // se for 1, o usuï¿½rio serï¿½ registrado        
                      break;
                 case '2':
                      loopState = false; // Sai da aba de cliente
@@ -363,7 +363,7 @@ struct customerData *find(char *cpf){
      customerInfo = start;
      while(customerInfo) {
         if (!strcmp(cpf, customerInfo->cpf)) return customerInfo;
-        customerInfo = customerInfo->next; // novo endereço
+        customerInfo = customerInfo->next; // novo endereï¿½o
      }
      printf("\nCPF nao encontrado.\n");
      return NULL;   
@@ -408,7 +408,7 @@ bool searchUser (char * userName, char *userPass) {
            return true;
         
         }
-        userInfo = userInfo->next; // novo endereço
+        userInfo = userInfo->next; // novo endereï¿½o
      }
      
      return false;
@@ -419,7 +419,7 @@ struct userData *findUser (char *userMat){
      customerInfo = start;
      while(customerInfo) {
         if (!strcmp(cpf, customerInfo->cpf)) return customerInfo;
-        customerInfo = customerInfo->next; // novo endereço
+        customerInfo = customerInfo->next; // novo endereï¿½o
      }
      printf("\nCPF nao encontrado.\n");
      return NULL;   
@@ -430,7 +430,7 @@ void changeData (struct customerData *customerInfo) {
      bool loopState = true;
      char userIn;
      do{
-        printf("\nSistema locacao 2.0\n"); // apresentação, ao usuário
+        printf("\nSistema locacao 2.0\n"); // apresentaï¿½ï¿½o, ao usuï¿½rio
         printf("-Aperte 1 para alterar nome\n");
         printf("-Aperte 2 para alterar CPF\n");
         printf("-Aperte 3 para alterar CEP\n");
@@ -572,10 +572,10 @@ void searchCustomer () {
         //scanf(" %c", &userIn);
         
         //if(userIn == 'S' || userIn == 's') {
-             //rentCar(); // Irá alugar um carro específico para o cliente;
+             //rentCar(); // Irï¿½ alugar um carro especï¿½fico para o cliente;
         //}
      }
-     //atribuir sistema de locação a partir daqui
+     //atribuir sistema de locaï¿½ï¿½o a partir daqui
 } 
 
 struct userData * findUser (char * userName) {
@@ -583,7 +583,7 @@ struct userData * findUser (char * userName) {
      userInfo = userStart;
      while(userInfo) {
         if (!strcmp(userName, userInfo->nameUser)) return userInfo;
-        userInfo = userInfo->next; // novo endereço
+        userInfo = userInfo->next; // novo endereï¿½o
      }
      return NULL;
 } 
@@ -630,7 +630,7 @@ void changeUserData (struct userData*userInfo) {
      bool loopState = true;
      char userIn;
      do{
-        printf("\nSistema locacao 2.0\n"); // apresentação, ao usuário
+        printf("\nSistema locacao 2.0\n"); // apresentaï¿½ï¿½o, ao usuï¿½rio
         printf("-Aperte 1 para alterar nome\n");
         printf("-Aperte 2 para alterar senha\n");
         printf("-Aperte 3 para alterar matricula\n");
@@ -694,7 +694,7 @@ void registerUser () {
      for(;;){
         userInfo = (struct userData*)malloc(sizeof(struct userData));
         if(!userInfo) {
-           printf("\nsem memória");
+           printf("\nsem memï¿½ria");
            return;                
         }
      
@@ -702,8 +702,8 @@ void registerUser () {
         if(!userInfo->nameUser[0]){
            free(userInfo);
            break;
-        } //verifica se houve inserção, caso não, para o loop e libera a memoria
-        accurateInput("Insira a matrícula: ", userInfo->userMat, 4);
+        } //verifica se houve inserï¿½ï¿½o, caso nï¿½o, para o loop e libera a memoria
+        accurateInput("Insira a matrï¿½cula: ", userInfo->userMat, 4);
         userInputs("Insira a senha: ", userInfo->passUser, 10);
         
         userInfo->acessLevel = 1;
@@ -720,7 +720,7 @@ void registerCustomer () {
      for(;;){
         customerInfo = (struct customerData*)malloc(sizeof(struct customerData));
         if(!customerInfo) {
-           printf("\nsem memória");
+           printf("\nsem memï¿½ria");
            return;                
         }
      
@@ -728,7 +728,7 @@ void registerCustomer () {
         if(!customerInfo->name[0]){
            free(customerInfo);
            break;
-        } //verifica se houve inserção, caso não, para o loop e libera a memoria
+        } //verifica se houve inserï¿½ï¿½o, caso nï¿½o, para o loop e libera a memoria
         accurateInput("Insira o CPF (neste padrao: 123.232.345-80): ", customerInfo->cpf, 15);
         accurateInput("Insira o CEP: ", customerInfo->cep, 10);
         accurateInput("Insira o n de registro da CNH (exemplo -> 00000000001): ", customerInfo->cnh, 12);
