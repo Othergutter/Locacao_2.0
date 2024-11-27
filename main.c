@@ -81,6 +81,12 @@ void accurateInput (char *prompt, char *s, int count); //Pega precisamente as en
 
 void stateInput (char *prompt, char *s, int count); // função de entrada para a silga do estado
 
+void flushUser(struct userData * userInfo); //will flush the user data;
+
+void deleteUser(char * userName); // Vai deletar o usuario
+
+struct userData * findUserMat (char * userMat); // Acha com base na matrícula do usuário
+
 void changeUserData(struct userData * userInfo); // mudará os dados do usuário
 
 void editUser (char * userName); // editará o usuário
@@ -182,46 +188,6 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-void initializeListUser (struct userData *i, struct userData **userStart, struct userData **userLast) {
-     struct userData *old, *p;
-     
-     if(*userLast==NULL) { //primeiro elemento da lista
-         i->next = NULL;
-         i->prior = NULL;
-         *userLast = i;
-         *userStart = i;
-         return;
-     }
-     
-     p = *userStart; //começa no topo da lista
-     
-     old = NULL;
-     while(p) {
-         if(strcmp(p->nameUser, i->nameUser)<0) {
-             old = p;
-             p = p->next;                   
-         } else {
-             if(p->prior) {
-                p->prior->next = i;
-                i->next = p;
-                i->prior = p->prior;
-                p->prior = i;
-                return;
-             }
-             i->next = p; // novo primeiro elemento
-             i->prior = NULL;
-             p->prior = i;
-             *userStart = i;
-             return;         
-         }              
-     }
-     old->next = i; //coloca no final
-     i->next = NULL;
-     i->prior = old;
-     *userLast - i;
-}
-
-
 void initializeListCustomer (struct customerData *i, struct customerData **start, struct customerData **last) {
      struct customerData *old, *p;
      
@@ -259,6 +225,45 @@ void initializeListCustomer (struct customerData *i, struct customerData **start
      i->next = NULL;
      i->prior = old;
      *last - i;
+}
+
+void initializeListUser (struct userData *i, struct userData **userStart, struct userData **userLast) {
+     struct userData *old, *p;
+     
+     if(*userLast==NULL) { //primeiro elemento da lista
+         i->next = NULL;
+         i->prior = NULL;
+         *userLast = i;
+         *userStart = i;
+         return;
+     }
+     
+     p = *userStart; //começa no topo da lista
+     
+     old = NULL;
+     while(p) {
+         if(strcmp(p->nameUser, i->nameUser)<0) {
+             old = p;
+             p = p->next;                   
+         } else {
+             if(p->prior) {
+                p->prior->next = i;
+                i->next = p;
+                i->prior = p->prior;
+                p->prior = i;
+                return;
+             }
+             i->next = p; // novo primeiro elemento
+             i->prior = NULL;
+             p->prior = i;
+             *userStart = i;
+             return;         
+         }              
+     }
+     old->next = i; //coloca no final
+     i->next = NULL;
+     i->prior = old;
+     *userLast - i;
 }
 
 void clearBuffer() {
@@ -343,7 +348,8 @@ void menuUser(char * userName){
          printf("\nSistema locacao 2.0, usuario: %s\n", userName); // apresentação, ao usuário
          printf("-Aperte 1 para cadastrar usuario\n");
          printf("-Aperte 2 para editar usuario\n");
-         printf("-Aperte 3 para sair do menu\n");   
+         printf("-Aperte 3 para apagar usuario\n");
+         printf("-Aperte 4 para sair do menu\n");   
          scanf(" %c", &userIn); // coleta a escolha e a armaezena
          clearBuffer();
   
@@ -352,9 +358,12 @@ void menuUser(char * userName){
                      registerUser(); // se for 1, o usuário será registrado        
                      break;
                 case '2':
-                     editUser(userName); // se for 1, o usuário será registrado        
+                     editUser(userName); // se for 2, o usuário será editado        
                      break;
                 case '3':
+                     deleteUser(userName); // se for 1, o usuário será apagado        
+                     break;
+                case '4':
                      loopState = false; // Sai da aba de cliente
                      break; 
                 default:
@@ -628,6 +637,65 @@ void stateInput (char *prompt, char *s, int count) {
      strcpy(s,p);
 }
 
+void flushUser(struct userData * userInfo) {
+
+    //estrutura anterior é atualizada
+    
+    if (userInfo->prior) {
+        userInfo->prior->next = userInfo->next;
+    } else {
+        // se nao há nada em prior (antecessor) sinifica que é o primeiro
+        userStart = userInfo->next;
+    }
+
+    //atualiza próxima estrutura
+    
+    if (userInfo->next) {
+        userInfo->next->prior = userInfo->prior;
+    } else {
+        //se não existir next, significa que é o último da lista
+        
+        userLast = userInfo->prior;
+    }
+
+    //liberando a memória alocada
+    
+    free(userInfo->nameUser);
+    free(userInfo->userMat);
+    free(userInfo->passUser);
+    free(userInfo);
+
+    printf("Usuario removido com sucesso.\n");
+}
+
+void deleteUser(char * userName) {
+     char userMat[30];
+     char userIn = ' ';
+     struct userData *userInfo;
+     
+     printf("\nInsira a matriluca (nesse padrao 001) que deseja procurar: ");
+     fgets(userMat, sizeof(userMat), stdin);
+     userMat[strcspn(userMat,"\n")] = '\0';
+     userInfo = findUserMat(userMat);
+     
+     if (findUser(userName)->acessLevel != 2) {
+        printf("\nVoce nao tem acesso a essa parte da gestao\n");
+        return;
+     }
+     
+     if(!userInfo){ 
+        printf("\nNao encontrado\n");
+     } else {
+        displayUser (userInfo);
+        printf("\nTem certeza que deseja apagar esse usuario?(s/n)\n");
+        scanf(" %c", &userIn);
+        if (userIn == 'S' || userIn == 's') {
+           flushUser (userInfo);
+        }        
+
+     }
+}
+
 struct userData * findUserMat (char * userMat) {
      struct userData *userInfo;
      userInfo = userStart;
@@ -722,6 +790,16 @@ void registerUser () {
         userInfo->acessLevel = 1;
         
         initializeListUser(userInfo, &userStart, &userLast);
+        
+        printf("\nDeseja cadastrar mais algum usuario?(s/n)\n");
+        scanf(" %c", &userIn);
+        clearBuffer();
+        
+        if (userIn == 's' || userIn =='S') {
+           printf("\nInsira os dados do proximo cliente\n"); 
+        } else {
+           break;
+        }  
         
      }
 } // entrada de dados
