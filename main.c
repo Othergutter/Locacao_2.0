@@ -8,6 +8,8 @@ struct customerData {
        char name[150];
        char cpf [15];
        char cep[10];
+       char cnh [12];
+       char category [5];
        char addressStreet[50];
        char addressCity[25];
        char state[5];
@@ -43,7 +45,9 @@ void initializeListUser (struct userData *i,
 
 void clearBuffer(); //limpa o buffer de scanf até encontrar um \n, evita repetição desnecessária
 
-void startMenu(char * userName, char *userPass); // Menu de do Login do usuario
+void forgotPass(); // Função para senhas esquecidas
+
+void startMenu(char * userName, char * userPass); // Menu de do Login do usuario
 
 void menuCustomer(char * userName); // Menu para ferramentas voltadas ao cliente
 
@@ -74,6 +78,10 @@ void userInputs (char *prompt, char *s, int count); // Pega as entradas do usuár
 void accurateInput (char *prompt, char *s, int count); //Pega precisamente as entrada do usuário
 
 void stateInput (char *prompt, char *s, int count); // função de entrada para a silga do estado
+
+void changeUserData(struct userData * userInfo); // mudará os dados do usuário
+
+void editUser (); // editará o usuário
 
 void registerUser (); //função que cadastrará os usuários com menor nível de acesso
 
@@ -227,7 +235,7 @@ void initializeListCustomer (struct customerData *i, struct customerData **start
      
      old = NULL;
      while(p) {
-         if(strcmp(p->name, i->name)<0) {
+         if(strcmp(p->cpf, i->cpf)<0) {
              old = p;
              p = p->next;                   
          } else {
@@ -257,8 +265,20 @@ void clearBuffer() {
      while ((c = getchar()) != '\n' && c != EOF) {} // para ao achar uma quebra de linha ou EOF (final do aqruivo)
 }
 
-void startMenu(char * userName, char *userPass) {
+void forgotPass() {
+     char userIn;
+     printf("\nEsqueceu a senha?(s/n)\n");
+     scanf("%c", &userIn);
+     clearBuffer();
+     if (userIn == 's' || userIn == 'S') {
+        printf("\nUm email foi enviada para os moderadores do sistema para alterar a senha\n");
+        //poderá ser implementado um sistema real a partir desse ponto :)
+     }
+}
+
+void startMenu(char * userName , char *userPass) {
      bool loopState = true;
+     int tries = 3;
      do{ // loop login
         printf("\nSistema locacao 2.0\n"); // apresentação, ao usuário
         printf("\nFaca o seu Login:\n");
@@ -266,6 +286,10 @@ void startMenu(char * userName, char *userPass) {
         userInputs("-Senha do usuario: ", userPass, 50);
         if(!searchUser (userName, userPass)){
              printf("\nSenha ou usuario incorretos!\n");
+             tries--;
+             if (!tries) {
+                forgotPass(); 
+                tries = 3;}  
         } else {
              loopState = false;    
      }
@@ -351,6 +375,8 @@ void display(struct customerData*customerInfo){
         printf("\nNome: %s\n", customerInfo->name);
         printf("CPF: %s\n", customerInfo->cpf);
         printf("CEP: %s\n", customerInfo->cep);
+        printf("n registro CNH: %s\n", customerInfo->cnh);
+        printf("n categoria CNH: %s\n", customerInfo->category);
         printf("Logradouro: %s\n", customerInfo->addressStreet);
         printf("Cidade: %s\n", customerInfo->addressCity);
         printf("Estado: %s\n", customerInfo->state);
@@ -388,6 +414,18 @@ bool searchUser (char * userName, char *userPass) {
      return false;
 }
 
+struct userData *findUser (char *userMat){
+     struct userData * userInfo;
+     customerInfo = start;
+     while(customerInfo) {
+        if (!strcmp(cpf, customerInfo->cpf)) return customerInfo;
+        customerInfo = customerInfo->next; // novo endereço
+     }
+     printf("\nCPF nao encontrado.\n");
+     return NULL;   
+}
+
+
 void changeData (struct customerData *customerInfo) {
      bool loopState = true;
      char userIn;
@@ -399,7 +437,9 @@ void changeData (struct customerData *customerInfo) {
         printf("-Aperte 4 para alterar logradouro\n");
         printf("-Aperte 5 para alterar cidade\n");
         printf("-Aperte 6 para alterar sigla do Estado\n");
-        printf("-Aperte 7 para sair do menu\n");
+        printf("-Aperte 7 para alterar o n de registro da CNH\n");
+        printf("-Aperte 8 para alterar a categoria da CNH\n");
+        printf("-Aperte 9 para sair do menu\n");
         scanf(" %c", &userIn); // coleta a escolha e a armaezena
         clearBuffer();
         
@@ -424,6 +464,12 @@ void changeData (struct customerData *customerInfo) {
               stateInput("Insira a sigla estado: ", customerInfo->state, 5);
               break;
            case '7':
+              accurateInput("Insira o n de registro da CNH: ", customerInfo->cnh, 12);
+              break;
+           case '8':   
+              userInputs("Insira a categoria da CNH: ", customerInfo->cnh, 4);  
+              break;
+           case '9':
               loopState = false;
               break;
            default:
@@ -447,7 +493,10 @@ void editCustomer () {
         printf("\nNao encontrado\n");
      } else {
         display (customerInfo);
-        
+        if (!customerInfo->status) {
+           printf("\nConta desabilitada para edicao\n");
+           return;
+        }
         printf("\nTem certeza que deseja editar esse cliente(s/n)\n");
         scanf(" %c", &userIn);
         if (userIn == 'S' || userIn == 's') {
@@ -546,8 +595,8 @@ void userInputs (char *prompt, char *s, int count) {
         printf("%s",prompt);
         fgets(p, sizeof(p), stdin);
         p[strcspn(p,"\n")] = '\0';
-        if(strlen(p)>count) printf("\nmuito longo\n");
-     }  while(strlen(p)>count);
+        if(strlen(p)>count-1) printf("\nmuito longo\n");
+     }  while(strlen(p)>count-1);
      strcpy(s,p);
 }
 
@@ -558,9 +607,9 @@ void accurateInput (char *prompt, char *s, int count) {
         printf("%s",prompt);
         fgets(p, sizeof(p), stdin);
         p[strcspn(p,"\n")] = '\0';
-        if(strlen(p)>count) printf("\nmuito longo\n");
+        if(strlen(p)>count-1) printf("\nmuito longo\n");
         if(strlen(p)< (count-1)) printf("\nmuito pequeno\n");
-     }  while(strlen(p)>count || strlen(p)< (count-1));
+     }  while(strlen(p)>count-1 || strlen(p)< (count-1));
      strcpy(s,p);
 }
 
@@ -571,11 +620,72 @@ void stateInput (char *prompt, char *s, int count) {
         printf("%s",prompt);
         fgets(p, sizeof(p), stdin);
         p[strcspn(p,"\n")] = '\0';
-        if(strlen(p)>count) printf("\nmuito longo\n");
+        if(strlen(p)>count-3) printf("\nmuito longo\n");
         if(strlen(p)< (count-3)) printf("\nmuito pequeno\n");
-     }  while(strlen(p)>count || strlen(p)< (count-3));
+     }  while(strlen(p)>count-3 || strlen(p)< (count-3));
      strcpy(s,p);
 }
+
+void changeUserData (struct userData*userInfo) {
+     bool loopState = true;
+     char userIn;
+     do{
+        printf("\nSistema locacao 2.0\n"); // apresentação, ao usuário
+        printf("-Aperte 1 para alterar nome\n");
+        printf("-Aperte 2 para alterar senha\n");
+        printf("-Aperte 3 para alterar matricula\n");
+        printf("-Aperte 4 para sair do menu\n");
+        scanf(" %c", &userIn); // coleta a escolha e a armaezena
+        clearBuffer();
+        
+        
+        switch (userIn) {
+           case '1':
+              userInputs("\nInsira o nome: ", userInfo->nameUser, 50);
+              break;
+           case '2':   
+              userInputs("Insira o a Senha: ", userInfo->passUser, 50);
+              break;
+           case '3':
+              accurateInput("Insira a matricula: ", userInfo->userMat, 4);
+              break;
+           case '4':
+              loopState = false;
+              break;
+           default:
+              printf("\nPor favor, insira um valor valido.\n");
+              break;
+        }
+     }while(loopState);
+}
+
+void editUser () {
+     char userMat[30];
+     char userIn = ' ';
+     struct userData *userInfo;
+     
+     printf("\nInsira a matriluca (nesse padrao 001) que deseja procurar: ");
+     fgets(userMat, sizeof(userMat), stdin);
+     userMat[strcspn(userMat,"\n")] = '\0';
+     userInfo = searchUser(userMat);
+     
+     if (userInfo->acessLevel == 1) {
+        printf("\nVoce nao tem acesso a essa parte da gestao\n");
+        return;
+     }
+     
+     if(!userInfo){ 
+        printf("\nNao encontrado\n");
+     } else {
+        displayUser (userInfo);
+        printf("\nTem certeza que deseja editar esse usuario?(s/n)\n");
+        scanf(" %c", &userIn);
+        if (userIn == 'S' || userIn == 's') {
+           changeUserData (userInfo);
+        }        
+
+     }
+} 
 
 void registerUser () {
      char userIn = ' ';
@@ -621,6 +731,8 @@ void registerCustomer () {
         } //verifica se houve inserção, caso não, para o loop e libera a memoria
         accurateInput("Insira o CPF (neste padrao: 123.232.345-80): ", customerInfo->cpf, 15);
         accurateInput("Insira o CEP: ", customerInfo->cep, 10);
+        accurateInput("Insira o n de registro da CNH (exemplo -> 00000000001): ", customerInfo->cnh, 12);
+        userInputs("Insira as categorias (exemplo -> A - B - ACC): ", customerInfo->category, 5);
         userInputs("Insira o logradouro do cliente: ", customerInfo->addressStreet, 50);
         userInputs("Insira a cidade do cliente: ", customerInfo->addressCity, 25);
         stateInput("Insira a sigla estado: ", customerInfo->state, 5);
