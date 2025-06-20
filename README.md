@@ -1,7 +1,7 @@
-PT - O código foi uma atividade desenvolvda durante as aulas de algoritmo e lógica de programação, trata-se de um sistema de registro de uma locadoura de carros. Entretando, consta apenas a parte de registro do cliente.
+PT - O código foi uma atividade desenvolvda durante as aulas de algoritmo e lógica de programação, trata-se de um sistema que gerencia funcionáriso e clientes de uma locadora de carros. O código é baseado em uma lista duplamente encadeada e estruturas simples. Para utilizá-lo, deve-se usar um usuário padrão.
 
 Usuário padrão para testar o código: mauricio.souza Senha: pimba123
 
-EN - The code was an activity developed during the classes of algorithm and programming logic, it is a system of registration of a car rental. However, there is only the registration part of the customer.
+EN - PT - The code was an activity developed during the classes of algorithm and programming logic, it is a system that manages the operation and customers of a car rental company. The code is based on a double-chained list and simple structures. To use it, you must use a standard user.
 
 Standard user to test code: mauricio.souza Password: pimba123
