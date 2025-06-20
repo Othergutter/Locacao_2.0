@@ -1,4 +1,4 @@
-PT - O código foi uma atividade desenvolvda durante as aulas de algoritmo e lógica de programação, trata-se de um sistema que gerencia funcionáriso e clientes de uma locadora de carros. O código é baseado em uma lista duplamente encadeada e estruturas simples. Para utilizá-lo, deve-se usar um usuário padrão.
+PT - O código foi uma atividade desenvolvida durante as aulas de algoritmo e lógica de programação, trata-se de um sistema que gerencia funcionáriso e clientes de uma locadora de carros. O código é baseado em uma lista duplamente encadeada e estruturas simples. Para utilizá-lo, deve-se usar um usuário padrão.
 
 Usuário padrão para testar o código: mauricio.souza Senha: pimba123
 
